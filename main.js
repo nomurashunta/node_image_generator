@@ -13,6 +13,7 @@ registerFont('./resources/font/ipaexg.ttf', {family: FONT_NAME});
 
 generateImages()
 
+//適当な元画像から5枚のダミー画像を生成するサンプル
 async function generateImages() {
     for (i = 1; i <= 5; i++) {
         let canvas = await createImageCanvas('./resources/images/out.jpg')
