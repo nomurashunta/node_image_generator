@@ -15,10 +15,12 @@ generateImages()
 
 //適当な元画像から5枚のダミー画像を生成するサンプル
 async function generateImages() {
-    for (i = 1; i <= 5; i++) {
-        let canvas = await createImageCanvas('./resources/images/out.jpg')
-        await addTextToCanvas(canvas, `ダミー画像_${i}`)
-        await saveCanvasImage(canvas, `./outputs/dummyImage_${i}.jpg`)
+    for (i = 1; i <= 34; i++) {
+        let canvas = await createImageCanvas('./resources/images/ot.jpg')
+        const color = getRandomColor()
+        await fillCanvasWithColor(canvas, color)
+        await addTextToCanvas(canvas, `その他ダミー画像_${i}`)
+        await saveCanvasImage(canvas, `./outputs/ot_dummy_${i}.jpg`)
     }
 }
 
@@ -33,8 +35,16 @@ async function createImageCanvas(filePath) {
 async function addTextToCanvas(canvas, text) {
     const ctx = canvas.getContext('2d')
     ctx.font = `${canvas.width / 10}px ${FONT_NAME}`
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
+    ctx.fillRect(0, canvas.height - canvas.height / 4, canvas.width, canvas.width / 4)
     ctx.fillStyle = 'red'
     ctx.fillText(text, 10, canvas.height - canvas.height / 10)
+}
+
+async function fillCanvasWithColor(canvas, color) {
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 async function saveCanvasImage(canvas, saveFilePath) {
@@ -43,3 +53,10 @@ async function saveCanvasImage(canvas, saveFilePath) {
     })
     console.log(`saved : ${saveFilePath}`)
 }
+
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    return `rgba(${r},${g},${b},1)`;
+};
